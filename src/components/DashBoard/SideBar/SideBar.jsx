@@ -7,15 +7,21 @@ import Logo from '../SideBar/Logo'
 import { GrLogout } from 'react-icons/gr'
 import { FcSettings } from 'react-icons/fc'
 import { AiOutlineBars } from 'react-icons/ai'
-import { BsGraphUp, BsHouseAdd, BsList, BsListCheck } from 'react-icons/bs'
+import { BsCloudFogFill, BsGraphUp, BsHouseAdd, BsList, BsListCheck } from 'react-icons/bs'
 import MenuItem from './MenuItem'
 import ToggleBtn from '../../Button/ToggleBtn'
 import useAuth from '../../../hooks/useAuth'
+import useRole from '../../../hooks/useRole'
+import HostMenu from './HostMenu'
+import GuestMenu from './GuestMenu'
+import AdminMenu from './AdminMenu'
 
 const Sidebar = () => {
     const{logOut}=useAuth()
     const [toggle, setToggle] = useState(false)
     const [isActive, setActive] = useState(false)
+   const [role, isloading]=useRole()
+   console.log(role);
 
 
     //   For guest/host menu item toggle button
@@ -58,7 +64,9 @@ const Sidebar = () => {
                     {/* Nav Items */}
                     <div className='flex flex-col justify-between flex-1 mt-6'>
                         {/* If a user is host */}
-                        <ToggleBtn toggleHandler={toggleHandler} />
+
+                        {role === "host" && <ToggleBtn toggleHandler={toggleHandler} />}
+
                         <nav>
                             <MenuItem
                                 icon={BsGraphUp}
@@ -66,22 +74,18 @@ const Sidebar = () => {
                                 address='/dashboard'
                             />
 
-                            {/* Menu Items */}
-                            <MenuItem
-                                icon={BsHouseAdd}
-                                label='Add Rooms'
-                                address='/dashboard/add-room'
-                            />
-                            <MenuItem
-                                icon={BsListCheck}
-                                label='My Listing'
-                                address='/dashboard/my-listings'
-                            />
-                            <MenuItem
-                                icon={BsHouseAdd}
-                                label='Add Rooms'
-                                address='/my-listings'
-                            />
+                            {/* host Menu Items */}
+                           
+                            {
+                                role === "host" ? toggle? <HostMenu></HostMenu> :<GuestMenu></GuestMenu> :""
+                            }
+                            
+                            {
+                                role === "guest" && <GuestMenu></GuestMenu>
+                            }
+                            {
+                                role === "admin" && <AdminMenu></AdminMenu>
+                            }
 
 
 

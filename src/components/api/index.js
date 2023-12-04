@@ -18,6 +18,7 @@ axiosSecure.interceptors.response.use(
     
         ){
             await clearCookie()
+            console.log('tirj');
             window.location.replace('/login')
     }
     return Promise.reject(error)

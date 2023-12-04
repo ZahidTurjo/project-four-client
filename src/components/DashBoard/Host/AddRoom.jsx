@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AddRoomForm from "../../From/AddRoomFrom";
-import { imageUpload } from "../../api/utils";
+// import { imageUpload } from "../../api/utils";
 import useAuth from "../../../hooks/useAuth";
 import { addARoom } from "../../api/room";
 import toast from 'react-hot-toast';
@@ -36,13 +36,13 @@ const AddRoom = () => {
             email: user?.email,
             image: user?.photoURL,
         }
-        const image_url = await imageUpload(image)
+        // const image_url = await imageUpload(image)
         const roomData = {
             location,
             category,
             title,
             to, from, price, quests, bathrooms, bedrooms, description, host,
-            image: image_url?.data?.display_url
+            // image: image_url?.data?.display_url
         }
         console.table(roomData)
 

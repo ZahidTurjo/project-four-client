@@ -4,12 +4,16 @@ import useAuth from "../../../hooks/useAuth"
 import { getHostRoom } from "../../api/room"
 import { data } from "autoprefixer"
 import RoomDataRow from "../TableRow/RoomDataRow"
+import useRole from "../../../hooks/useRole"
+
 
 
 const MyListings = () => {
   const { user } = useAuth()
   const [rooms, setRooms] = useState([])
   const[loading,setLoading]=useState(false)
+  const [role]=useRole()
+console.log(role);
  
   useEffect(() => {
     if(!user?.email){
@@ -40,7 +44,7 @@ const MyListings = () => {
                       scope='col'
                       className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
                     >
-                      Title
+                      Title 
                     </th>
                     <th
                       scope='col'
@@ -82,7 +86,9 @@ const MyListings = () => {
                 </thead>
                 <tbody>{
                   rooms.map(room => <RoomDataRow key={room._id} room={room}></RoomDataRow>)
-                }</tbody>
+                }
+              
+                </tbody>
               </table>
             </div>
           </div>

@@ -9,6 +9,11 @@ import { getAllRooms, getSingleRoom } from '../components/api/room'
 import DashBoard from '../layouts/DashBoard'
 import AddRoom from '../components/DashBoard/Host/AddRoom'
 import MyListings from '../components/DashBoard/Host/MyListings'
+import HostRoute from './HostRoute'
+import ManageUsers from '../components/DashBoard/Admin/ManageUsers'
+import AdminRoute from './AdminRoute'
+import Profile from '../components/DashBoard/Common/Profile'
+import MyBookings from '../components/DashBoard/Guest/MyBookings'
 
 
 
@@ -21,32 +26,56 @@ export const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
-        loader:()=>getAllRooms()
+        loader: () => getAllRooms()
       },
       {
         path: '/room/:id',
         element: <PrivateRoute><RoomDetails></RoomDetails></PrivateRoute>,
-        loader:({params})=> getSingleRoom(params.id)
+        loader: ({ params }) => getSingleRoom(params.id)
       },
     ],
   },
   { path: '/login', element: <Login /> },
   { path: '/signup', element: <SignUp /> },
   {
-    path:'/dashboard',
-    element:<DashBoard></DashBoard>,
-    children:[
+    path: '/dashboard',
+    element: <DashBoard></DashBoard>,
+    children: [
       {
-      path:'add-room',
-      element:<PrivateRoute><AddRoom></AddRoom></PrivateRoute>
-    },
- {
-  path:'my-listings',
-  element:<PrivateRoute><MyListings></MyListings></PrivateRoute>
- }
-   
-  ]
-   
+        path: 'add-room',
+        element: <PrivateRoute><HostRoute><AddRoom></AddRoom></HostRoute></PrivateRoute>
+      },
+      {
+        path: 'my-listings',
+        element: <PrivateRoute>
+          <HostRoute><MyListings></MyListings></HostRoute>
+        </PrivateRoute>
+      },
+      // admin
+      {
+        path: 'manage-users',
+        element:
+          <PrivateRoute>
+            <AdminRoute>
+              <ManageUsers></ManageUsers>
+            </AdminRoute>
+          </PrivateRoute>
+
+      },{
+        path:'profile',
+        element:<PrivateRoute>
+          <Profile></Profile>
+        </PrivateRoute>
+      },
+      {
+        path:'my-bookings',
+        element:<PrivateRoute>
+          <MyBookings></MyBookings>
+        </PrivateRoute>
+      }
+
+    ]
+
   }
 
 ])

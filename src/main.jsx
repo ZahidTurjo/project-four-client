@@ -9,12 +9,19 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 
 import React from 'react'
 import AuthProvider from './provides/AuthProvider'
+import {
+  QueryClient,
+  QueryClientProvider} from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-  <AuthProvider>
-  <Toaster></Toaster>
-  <RouterProvider router={router} />
-  </AuthProvider>
-</React.StrictMode>
+
+    <AuthProvider>
+     <QueryClientProvider client={queryClient}>
+     <Toaster></Toaster>
+        <RouterProvider router={router} />
+     </QueryClientProvider>
+    </AuthProvider>
+  
 )

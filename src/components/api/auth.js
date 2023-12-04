@@ -1,4 +1,5 @@
 
+
 import axiosSecure from "."
 
 
@@ -26,4 +27,11 @@ export const clearCookie = async()=>{
     const {data}= await axiosSecure.get('/logout')
     
     return data
+}
+
+// get user role
+export const getRole=async(email)=>{
+    const {data}=await axiosSecure(`/users/${email}`)
+    return data.role
+
 }
