@@ -15,7 +15,9 @@ const MyBookings = () => {
         queryKey: ['bookings',user?.email],
         queryFn: async () => await getBookings(user?.email)
     })
-    console.log(bookings);
+    if(isLoading){
+        return <h2>loading...</h2>
+    }
 
     return (
         <>

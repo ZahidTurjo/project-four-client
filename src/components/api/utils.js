@@ -1,4 +1,5 @@
 import axios from "axios"
+import axiosSecure from "."
 
 
 export const imageUpload = async(image)=>{
@@ -11,3 +12,9 @@ export const imageUpload = async(image)=>{
  return data
 
 }
+
+// admin-stats
+export const getAdminStat=async()=>{
+  const {data}= await axiosSecure('/admin-stat')
+     return data
+ }

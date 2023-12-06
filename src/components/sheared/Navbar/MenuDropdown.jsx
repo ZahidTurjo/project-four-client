@@ -4,20 +4,44 @@ import { Link } from 'react-router-dom'
 
 
 import useAuth from '../../../hooks/useAuth'
+import HostModal from '../../Modal/HostRequestModal'
+import { requestedRole } from '../../api/auth'
+import toast from 'react-hot-toast'
+import useRole from '../../../hooks/useRole'
 
 const MenuDropdown = () => {
+  
+  const [role]=useRole()
   const [isOpen, setIsOpen] = useState(false)
+  const [isModalOpen,setIsModalOpen]=useState(false)
   const { user,logOut } = useAuth()
- 
+ const closeModal=()=>{
+  setIsModalOpen(false)
+ }
+ const modalHandler=async()=>{
+  // request to be host
+  try {
+
+  const data= await requestedRole(user?.email)
+  console.log(data);
+  toast.success('request sent succesfully')
+  } catch (error) {
+    console.log(error);
+  }finally{
+    setIsOpen(false)
+  }
+}
 
   return (
     <div className='relative'>
       <div className='flex flex-row items-center gap-3'>
         {/* Become A Host btn */}
         <div className='hidden md:block'>
-          <button className='disabled:cursor-not-allowed cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full  transition'>
+         { role === 'guest' && <button
+          onClick={()=>setIsModalOpen(true)}
+          className='disabled:cursor-not-allowed cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full  transition'>
             Host your home
-          </button>
+          </button>}
         </div>
         {/* Dropdown btn */}
         <div
@@ -85,6 +109,7 @@ const MenuDropdown = () => {
           </div>
         </div>
       )}
+    <HostModal modalHandler={modalHandler} isOpen={isModalOpen} closeModal={closeModal}></HostModal>
     </div>
   )
 }

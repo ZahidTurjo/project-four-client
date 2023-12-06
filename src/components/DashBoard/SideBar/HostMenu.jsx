@@ -1,6 +1,7 @@
 
+
 import MenuItem from './MenuItem';
-import { BsHouseAdd, BsListCheck } from 'react-icons/bs';
+import { BsBookmarksFill, BsHouseAdd, BsListCheck } from 'react-icons/bs';
 
 const HostMenu = () => {
     return <>
@@ -17,6 +18,11 @@ const HostMenu = () => {
             icon={BsListCheck}
             label='My Listing'
             address='/dashboard/my-listings'
+        />
+        <MenuItem
+            icon={BsBookmarksFill}
+            label='Manage Bookings'
+            address='/dashboard/manage-bookings'
         />
     </>
 };
